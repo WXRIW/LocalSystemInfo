@@ -36,6 +36,7 @@ std::string wchar_to_string(const wchar_t* wstr) {
 
 std::string get_processor_info() {
     std::ostringstream info;
+
 #ifdef _WIN32
     HKEY hKey;
     wchar_t buffer[256];
@@ -46,16 +47,30 @@ std::string get_processor_info() {
         }
         RegCloseKey(hKey);
     }
-#else
+    else {
+        info << "Unknown CPU";
+    }
+#elif defined(__linux__)
     std::ifstream cpuinfo("/proc/cpuinfo");
     std::string line;
     while (std::getline(cpuinfo, line)) {
         if (line.find("model name") != std::string::npos) {
             info << line.substr(line.find(":") + 2);
             break;
-        }
     }
+}
     cpuinfo.close();
+#elif defined(__APPLE__)
+    char buffer[256];
+    size_t buffer_size = sizeof(buffer);
+    if (sysctlbyname("machdep.cpu.brand_string", &buffer, &buffer_size, nullptr, 0) == 0) {
+        info << buffer;
+    }
+    else {
+        info << "Unknown CPU";
+    }
+#else
+    info << "Unknown CPU";
 #endif
     return info.str();
 }
@@ -106,24 +121,30 @@ std::string get_system_info()
     }
 
 #else
-    struct addrinfo hints, * res;
-    std::memset(&hints, 0, sizeof(hints));
+    // 获取 IP 地址
+    struct addrinfo hints = {}, * res;
     hints.ai_family = AF_INET;
     if (getaddrinfo(hostname, nullptr, &hints, &res) == 0)
     {
-        info << "IP Address: " << inet_ntoa(((struct sockaddr_in*)res->ai_addr)->sin_addr) << "\n";
+        struct sockaddr_in* addr = (struct sockaddr_in*)res->ai_addr;
+        info << "IP Address: " << inet_ntoa(addr->sin_addr) << "\n";
         freeaddrinfo(res);
     }
-
-    // 获取内存信息
-    struct sysinfo sys_info;
-    if (sysinfo(&sys_info) == 0)
+    else
     {
-        info << "Total RAM: " << (sys_info.totalram / (1024 * 1024)) << " MB\n";
+        info << "IP Address: Unknown\n";
     }
 
-    // 获取处理器信息 (Linux/macOS 上只能简化实现)
+    // 获取处理器信息
+    info << "Processor: " << get_processor_info() << "\n";
     info << "Processor Cores: " << sysconf(_SC_NPROCESSORS_ONLN) << "\n";
+
+    // 获取内存信息
+    long ram = sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGE_SIZE) / (1024 * 1024);
+    info << "Total RAM: " << ram << " MB\n";
+
+    // 获取磁盘信息
+    info << get_disk_info() << std::endl;
 #endif
 
     return info.str();
