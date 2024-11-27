@@ -3,12 +3,14 @@
 #include <cstdlib>
 
 #ifdef _WIN32
+    #define _WINSOCK_DEPRECATED_NO_WARNINGS
     #include <winsock2.h>
+    #include <ws2tcpip.h>
     #pragma comment(lib, "ws2_32.lib")
-    typedef int socklen_t;
 #else
     #include <sys/socket.h>
     #include <netinet/in.h>
+    #include <arpa/inet.h>
     #include <unistd.h>
 #endif
 
@@ -43,7 +45,7 @@ int main()
     }
 #endif
 
-    int server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    int server_socket = socket(AF_INET, SOCK_DGRAM, 0);  // 使用UDP协议
     if (server_socket == -1)
     {
         std::cerr << "Socket creation failed." << std::endl;
@@ -62,25 +64,24 @@ int main()
         return 1;
     }
 
-    if (listen(server_socket, 5) == -1)
-    {
-        std::cerr << "Listen failed." << std::endl;
-        return 1;
-    }
-
-    std::cout << "Server is listening on port " << PORT << "..." << std::endl;
+    std::cout << "Server is listening on port " << PORT << "..." << std::endl << std::endl;
 
     while (true)
     {
         sockaddr_in client_addr;
         socklen_t client_addr_len = sizeof(client_addr);
-        int client_socket = accept(server_socket, (sockaddr*)&client_addr, &client_addr_len);
-        if (client_socket == -1)
+        char buffer[BUFFER_SIZE];
+
+        int bytes_received = recvfrom(server_socket, buffer, BUFFER_SIZE, 0, (sockaddr*)&client_addr, &client_addr_len);
+        if (bytes_received > 0)
         {
-            std::cerr << "Accept failed." << std::endl;
-            continue;
+            buffer[bytes_received] = '\0';
+            std::cout << "Received message from " << inet_ntoa(client_addr.sin_addr) << ": " << std::endl << buffer << std::endl;
+            
+            // 发送响应
+            const char* response = "Server received your message.";
+            sendto(server_socket, response, std::strlen(response), 0, (sockaddr*)&client_addr, client_addr_len);
         }
-        handle_client(client_socket);
     }
 
 #ifdef _WIN32
