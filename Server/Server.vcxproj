@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{2994726e-2227-4252-9d09-06ccd133795d}</ProjectGuid>
-    <RootNamespace>LocalSystemInfo</RootNamespace>
+    <RootNamespace>Server</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Server</ProjectName>
   </PropertyGroup>
