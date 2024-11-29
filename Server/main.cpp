@@ -17,7 +17,7 @@
 const int PORT = 12345;
 const int BUFFER_SIZE = 1024;
 
-void handle_client(int client_socket)
+static void handle_client(int client_socket)
 {
     char buffer[BUFFER_SIZE];
     int bytes_received = recv(client_socket, buffer, BUFFER_SIZE - 1, 0);
@@ -68,25 +68,29 @@ int main()
 
     while (true)
     {
-        sockaddr_in client_addr;
+        sockaddr_in client_addr{};
         socklen_t client_addr_len = sizeof(client_addr);
-        char buffer[BUFFER_SIZE];
+		char buffer[BUFFER_SIZE];
 
-        int bytes_received = recvfrom(server_socket, buffer, BUFFER_SIZE, 0, (sockaddr*)&client_addr, &client_addr_len);
-        if (bytes_received > 0)
-        {
-            buffer[bytes_received] = '\0';
-            std::cout << "Received message from " << inet_ntoa(client_addr.sin_addr) << ": " << std::endl << buffer << std::endl;
-            
-            // 发送响应
-            const char* response = "Server received your message.";
-            sendto(server_socket, response, std::strlen(response), 0, (sockaddr*)&client_addr, client_addr_len);
-        }
-    }
+		int bytes_received = recvfrom(server_socket, buffer, BUFFER_SIZE - 1, 0, (sockaddr*)&client_addr, &client_addr_len);
+		if (bytes_received >= 0 && bytes_received < BUFFER_SIZE)
+		{
+			buffer[bytes_received] = '\0';
+			std::cout << "Received message from " << inet_ntoa(client_addr.sin_addr) << ": " << std::endl << buffer << std::endl;
+
+			// 发送响应
+			const char* response = "Server received your message.";
+			sendto(server_socket, response, std::strlen(response), 0, (sockaddr*)&client_addr, client_addr_len);
+		}
+		else
+		{
+			std::cerr << "Error receiving data or buffer overflow." << std::endl;
+		}
+	}
 
 #ifdef _WIN32
-    closesocket(server_socket);
-    WSACleanup();
+	closesocket(server_socket);
+	WSACleanup();
 #else
     close(server_socket);
 #endif
