@@ -82,10 +82,6 @@ int main()
 			const char* response = "Server received your message.";
 			sendto(server_socket, response, std::strlen(response), 0, (sockaddr*)&client_addr, client_addr_len);
 		}
-		else
-		{
-			std::cerr << "Error receiving data or buffer overflow." << std::endl;
-		}
 	}
 
 #ifdef _WIN32
