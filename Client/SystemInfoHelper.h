@@ -31,6 +31,7 @@
 	#include <fstream>
 	#include <sys/statvfs.h>
 	#include <sys/types.h>
+	#include <sys/utsname.h>
 #endif
 
 #ifdef __APPLE__

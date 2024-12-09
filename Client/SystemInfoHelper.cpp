@@ -126,7 +126,7 @@ std::string SystemInfoHelper::GetProcessorArchitecture()
             return "x64";
         else if (arch == "i686" || arch == "i386")
             return "x86";
-        else if (arch == "aarch64")
+        else if (arch == "aarch64" || arch == "arm64")
             return "ARM64";
         else if (arch.find("arm") != std::string::npos)
             return "ARM";
