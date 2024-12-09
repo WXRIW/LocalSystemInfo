@@ -1,3 +1,12 @@
+/************************************************************************
+ * Filename:    SystemInfoHelper.h
+ * Description: 系统信息帮助类定义
+ * Author:      XY Wang
+ * Repository:  https://github.com/WXRIW/LocalSystemInfo
+ * License:     MIT license
+ * Copyright:   Copyright 2024 WXRIW
+ ************************************************************************/
+
 #pragma once
 
 #include <sstream>

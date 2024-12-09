@@ -1,3 +1,12 @@
+/************************************************************************
+ * Filename:    SystemInfo.cpp
+ * Description: 系统信息类实现
+ * Author:      XY Wang
+ * Repository:  https://github.com/WXRIW/LocalSystemInfo
+ * License:     MIT license
+ * Copyright:   Copyright 2024 WXRIW
+ ************************************************************************/
+
 #include "SystemInfo.h"
 
 std::string SystemInfo::GetFullOutput() const

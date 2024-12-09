@@ -1,3 +1,12 @@
+/************************************************************************
+ * Filename:    main.cpp
+ * Description: Client 程序入口点
+ * Author:      XY Wang
+ * Repository:  https://github.com/WXRIW/LocalSystemInfo
+ * License:     MIT license
+ * Copyright:   Copyright 2024 WXRIW
+ ************************************************************************/
+
 #include <iostream>
 #include <cstring>
 #include <cstdlib>

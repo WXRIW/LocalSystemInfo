@@ -1,3 +1,12 @@
+/************************************************************************
+ * Filename:    WindowsHelper.cpp
+ * Description: Windows ∞Ô÷˙¿‡ µœ÷
+ * Author:      XY Wang
+ * Repository:  https://github.com/WXRIW/LocalSystemInfo
+ * License:     MIT license
+ * Copyright:   Copyright 2024 WXRIW
+ ************************************************************************/
+
 #include "WindowsHelper.h"
 
 #ifdef _WIN32

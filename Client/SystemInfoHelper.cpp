@@ -1,3 +1,12 @@
+/************************************************************************
+ * Filename:    SystemInfoHelper.cpp
+ * Description: 系统信息帮助类实现
+ * Author:      XY Wang
+ * Repository:  https://github.com/WXRIW/LocalSystemInfo
+ * License:     MIT license
+ * Copyright:   Copyright 2024 WXRIW
+ ************************************************************************/
+
 #include "SystemInfoHelper.h"
 
 std::string SystemInfoHelper::GetHostName()
