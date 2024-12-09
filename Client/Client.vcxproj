@@ -128,6 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SystemInfo.cpp" />
+    <ClCompile Include="SystemInfoHelper.cpp" />
+    <ClCompile Include="WindowsHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SystemInfo.h" />
+    <ClInclude Include="SystemInfoHelper.h" />
+    <ClInclude Include="WindowsHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
