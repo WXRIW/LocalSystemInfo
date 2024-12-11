@@ -9,6 +9,19 @@
 
 #include "SystemInfoHelper.h"
 
+SystemInfo SystemInfoHelper::GetCurrentSystemInfo()
+{
+    auto info = SystemInfo();
+    info.HostName = SystemInfoHelper::GetHostName();
+    info.IpAddress = SystemInfoHelper::GetIpAddress();
+    info.ProcessorName = SystemInfoHelper::GetProcessorName();
+    info.ProcessorArchitecture = SystemInfoHelper::GetProcessorArchitecture();
+    info.ProcessorCores = SystemInfoHelper::GetProcessorCores();
+    info.RamSize = SystemInfoHelper::GetRamInfo();
+    info.DiskSize = SystemInfoHelper::GetDiskSize();
+    return info;
+}
+
 std::string SystemInfoHelper::GetHostName()
 {
     char hostname[256];

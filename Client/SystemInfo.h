@@ -8,7 +8,8 @@
  ************************************************************************/
 
 #pragma once
-#include "SystemInfoHelper.h"
+#include <sstream>
+#include <string>
 
 class SystemInfo
 {
@@ -26,10 +27,4 @@ public:
 	/// </summary>
 	/// <returns>字符串输出</returns>
 	std::string GetFullOutput() const;
-
-	/// <summary>
-	/// 获取当前的系统信息
-	/// </summary>
-	/// <returns>包含当前系统信息的系统信息类</returns>
-	static SystemInfo GetCurrentSystemInfo();
 };
