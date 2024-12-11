@@ -27,6 +27,10 @@
 	#include <sys/utsname.h>
 #endif
 
+#ifdef __linux__
+	#include <fstream>
+#endif
+
 #ifdef __APPLE__
 	#include <sys/sysctl.h> // 用于 macOS 获取系统信息
 #endif

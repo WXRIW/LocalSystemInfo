@@ -20,6 +20,10 @@
 	#include <unistd.h>
 #endif
 
+#ifdef __linux__
+	#include <cstring>
+#endif
+
 class Socket
 {
 private:
