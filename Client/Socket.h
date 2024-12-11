@@ -16,16 +16,8 @@
 	#include <winsock2.h>
 #else
 	#include <sys/socket.h>
-	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	#include <unistd.h>
-	#include <netdb.h>
-	#include <sys/types.h>
-	#include <ifaddrs.h>
-	#include <fstream>
-	#include <sys/statvfs.h>
-	#include <sys/types.h>
-	#include <sys/utsname.h>
 #endif
 
 class Socket
