@@ -18,7 +18,12 @@
 class WindowsHelper
 {
 public:
-	static std::string wchar_to_string(const wchar_t* wstr);
+	/// <summary>
+	/// ½«¿í×Ö·û×ª»»Îª×Ö·û´®
+	/// </summary>
+	/// <param name="wstr">¿í×Ö·û</param>
+	/// <returns>×Ö·û´®</returns>
+	static std::string WcharToString(const wchar_t* wstr);
 };
 
 #endif

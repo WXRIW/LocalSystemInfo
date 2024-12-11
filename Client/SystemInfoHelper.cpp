@@ -59,7 +59,7 @@ std::string SystemInfoHelper::GetProcessorName()
     {
         if (RegQueryValueExW(hKey, L"ProcessorNameString", nullptr, nullptr, reinterpret_cast<LPBYTE>(buffer), &buffer_size) == ERROR_SUCCESS)
         {
-            info << WindowsHelper::wchar_to_string(buffer);
+            info << WindowsHelper::WcharToString(buffer);
         }
         RegCloseKey(hKey);
     }
@@ -131,7 +131,7 @@ std::string SystemInfoHelper::GetProcessorArchitecture()
         else if (arch.find("arm") != std::string::npos)
             return "ARM";
         else
-            return arch;  // 返回原始字符串
+            return arch;  // 返回原始类型
     }
     return "Unknown";
 #else
@@ -170,11 +170,7 @@ std::string SystemInfoHelper::GetDiskSize()
     ULARGE_INTEGER free_space, total_space;
     if (GetDiskFreeSpaceEx(L"C:\\", &free_space, &total_space, nullptr))
     {
-        info << (total_space.QuadPart / (static_cast<unsigned long long>(1024) * 1024 * 1024)) << " GB\n";
-    }
-    else
-    {
-        info << "Failed to retrieve disk info.\n";
+        info << (total_space.QuadPart / (static_cast<unsigned long long>(1024) * 1024 * 1024)) << " GB";
     }
 #else
     struct statvfs stat;
@@ -182,11 +178,7 @@ std::string SystemInfoHelper::GetDiskSize()
     {
         unsigned long long total_space = stat.f_blocks * stat.f_frsize;
         unsigned long long free_space = stat.f_bfree * stat.f_frsize;
-        info << (total_space / (1024 * 1024 * 1024)) << " GB\n";
-    }
-    else
-    {
-        info << "Failed to retrieve disk info.\n";
+        info << (total_space / (1024 * 1024 * 1024)) << " GB";
     }
 #endif
     return info.str();
